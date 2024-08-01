@@ -1,12 +1,7 @@
-import express from "express";
+import app from "./app.js";
 
-const app = express();
 const port = process.env.PORT || 3001;
 
-app.get("/", (req, res) => {
-  res.send("API functioning well");
-});
-
 app.listen(port, () => {
-  console.log("server listening on port 3001");
+  console.log("serv listening on port 3001");
 });
