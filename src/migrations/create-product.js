@@ -9,8 +9,8 @@ module.exports = {
         autoIncrement: true,
         allowNull: false,
       },
-      codigo: { type: Sequelize.STRING(15), allowNull: false, unique: true },
-      descripcion: { type: Sequelize.STRING(120), allowNull: false },
+      code: { type: Sequelize.STRING(15), allowNull: false, unique: true },
+      description: { type: Sequelize.STRING(120), allowNull: false },
       company: {
         type: Sequelize.INTEGER,
         allowNull: false,
