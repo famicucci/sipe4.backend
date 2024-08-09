@@ -1,7 +1,7 @@
 const db = require("../models")
 const { Product } = db
 
-exports.getProduct = async (req, res) => {
+exports.getProducts = async (req, res) => {
   try {
     const productList = await Product.findAll({
       attributes: ["code", "description"],
