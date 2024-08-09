@@ -3,11 +3,11 @@ const { Product } = db
 
 exports.getProduct = async (req, res) => {
   try {
-    const productsList = await Product.findAll({
+    const productList = await Product.findAll({
       attributes: ["code", "description"],
     })
 
-    res.status(200).send(productsList)
+    res.status(200).send(productList)
   } catch (error) {
     res.statusMessage = "product list not found"
     return res.status(404).end()
