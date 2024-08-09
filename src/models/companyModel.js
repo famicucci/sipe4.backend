@@ -16,9 +16,17 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Company",
-      tableName: "company",
+      tableName: "Company",
       timestamps: false,
     }
   )
+  Company.associate = (models) => {
+    Company.hasMany(models.Product, {
+      foreignKey: { allowNull: false },
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
+    })
+  }
+
   return Company
 }

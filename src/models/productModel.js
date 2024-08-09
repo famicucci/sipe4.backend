@@ -16,15 +16,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(120),
         allowNull: false,
       },
-      company: {
+      companyId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: "empresa",
-          key: "id",
-        },
-        onDelete: "RESTRICT",
-        onUpdate: "RESTRICT",
       },
     },
     {
@@ -33,5 +27,13 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     }
   )
+  Product.associate = (models) => {
+    Product.belongsTo(models.Company, {
+      foreignKey: "companyId",
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
+    })
+  }
+
   return Product
 }

@@ -11,10 +11,13 @@ module.exports = {
       },
       code: { type: Sequelize.STRING(15), allowNull: false, unique: true },
       description: { type: Sequelize.STRING(120), allowNull: false },
-      company: {
+      companyId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: "company", key: "id" },
+        references: {
+          model: "Company",
+          key: "id",
+        },
         onDelete: "RESTRICT",
         onUpdate: "RESTRICT",
       },
