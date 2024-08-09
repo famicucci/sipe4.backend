@@ -5,18 +5,13 @@ const { Product } = db
 
 exports.getProduct = async (req, res) => {
   try {
-    const getProductsList = await Product.findAll({
+    const productsList = await Product.findAll({
       attributes: ["code", "description"],
     })
 
-    if (!getProductsList.length > 0) {
-      res.statusMessage = "No hay lista aun"
-      return res.status(404).end()
-    }
-
-    res.json({ msg: "Lista de productos encontrada", getProductsList })
+    res.json(productsList)
   } catch (error) {
-    res.statusMessage = "Lista no encontrada"
+    res.statusMessage = "product list not found"
     return res.status(404).end()
   }
 }
