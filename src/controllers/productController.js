@@ -1,5 +1,3 @@
-// const { Product } = require("../models/productModel")
-
 const db = require("../models")
 const { Product } = db
 
@@ -9,7 +7,7 @@ exports.getProduct = async (req, res) => {
       attributes: ["code", "description"],
     })
 
-    res.json(productsList)
+    res.status(200).send(productsList)
   } catch (error) {
     res.statusMessage = "product list not found"
     return res.status(404).end()
