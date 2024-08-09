@@ -19,10 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       company: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        // references: {
-        //   model: "empresa",
-        //   key: "id",
-        // },
+        references: {
+          model: "empresa",
+          key: "id",
+        },
         onDelete: "RESTRICT",
         onUpdate: "RESTRICT",
       },
