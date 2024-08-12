@@ -16,20 +16,24 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(120),
         allowNull: false,
       },
-      companyId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
+      // companyId: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      //   references: {
+      //     model: "Company",
+      //     key: "id",
+      //   },
+      // },
     },
     {
       modelName: "Product",
-      tableName: "Product",
+      tableName: "product",
       timestamps: false,
     }
   )
   Product.associate = (models) => {
     Product.belongsTo(models.Company, {
-      foreignKey: "companyId",
+      foreignKey: { allowNull: false },
       onDelete: "RESTRICT",
       onUpdate: "RESTRICT",
     })
