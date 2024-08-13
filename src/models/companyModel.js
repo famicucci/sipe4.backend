@@ -26,6 +26,11 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "RESTRICT",
       onUpdate: "RESTRICT",
     })
+    Company.hasMany(models.User, {
+      foreignKey: { allowNull: false },
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
+    })
   }
 
   return Company

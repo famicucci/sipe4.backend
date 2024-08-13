@@ -28,6 +28,12 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "user",
     }
   )
-
+  User.associate = (models) => {
+    User.belongsTo(models.Company, {
+      foreignKey: { allowNull: false },
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
+    })
+  }
   return User
 }
