@@ -1,8 +1,6 @@
-const { Model } = require("sequelize");
-
 module.exports = (sequelize, DataTypes) => {
-  class Price extends Model {}
-  Price.init(
+  const Price = sequelize.define(
+    "Price",
     {
       amount: {
         type: DataTypes.DECIMAL(12, 2),
@@ -15,9 +13,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
+      modelName: "Price",
       tableName: "price", // Nombre de la tabla en la db
-      timestamps: true,
+      timestamps: false,
     }
   );
+
+  // Price.associate=(models)=>{
+
+  // }
   return Price;
 };
