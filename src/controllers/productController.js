@@ -1,5 +1,4 @@
 const db = require("../models")
-// const generateToken = require("../utils/token")
 const { Product } = db
 
 exports.getProducts = async (req, res) => {
