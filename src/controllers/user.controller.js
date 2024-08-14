@@ -8,30 +8,35 @@ exports.loginUser = async (req, res) => {
   try {
     const user = await User.findOne({ where: { user: req.body.user } })
 
-    if (user) {
-      const verifyPassword = bcryptjs.compareSync(
-        req.body.password,
-        user.password
-      )
+    if (!user) {
+      res.statusMessage = "Error in username or password"
+      return res.status(400).end()
+    }
 
-      if (verifyPassword) {
-        const token = generateJWT(user)
-        const serialized = serialize("userToken", token, {
-          // httpOnly: true,
-          maxAge: 60 * 60 * 24 * 7,
-          path: "/",
-          sameSite: "strict",
-          secure: false,
-        })
-        res.send({ success: token, userType: user.rol ? "admin" : "user" })
-      } else {
-        res.statusMessage = "Error in username or password"
-        return res.status(400).end()
-      }
+    const verifyPassword = bcryptjs.compareSync(
+      req.body.password,
+      user.password
+    )
+
+    if (verifyPassword) {
+      const token = generateJWT(user)
+      const serialized = serialize("userToken", token, {
+        // httpOnly: true,
+        maxAge: 60 * 60 * 24 * 7,
+        path: "/",
+        sameSite: "strict",
+        secure: false,
+      })
+
+      res.setHeader("Set-Cookie", serialized)
+      return res.send({ success: token, userType: user.rol ? "admin" : "user" })
+    } else {
+      res.statusMessage = "Error in username or password"
+      return res.status(400).end()
     }
   } catch (error) {
     console.error(error)
-    res.statusMessage = "error"
+    res.statusMessage = "Error"
     return res.status(500).end()
   }
 }

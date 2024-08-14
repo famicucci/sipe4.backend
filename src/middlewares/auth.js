@@ -4,12 +4,14 @@ const authToken = (req, res, next) => {
   const authHeader = req.headers["authorization"]
 
   if (!authHeader) {
-    return res.status(400).json({ msj: "unauthorized" })
+    res.statusMessage = "unauthorized"
+    return res.status(400).end()
   }
 
   const token = authHeader.split(" ")[1]
   if (!token) {
-    return res.status(401).json({ msj: "Token invalid" })
+    res.statusMessage = "Token invalid"
+    return res.status(401).end()
   }
   let payload = {}
 
