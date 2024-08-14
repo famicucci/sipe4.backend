@@ -4,9 +4,13 @@ const authToken = (req, res, next) => {
   const authHeader = req.headers["authorization"]
 
   if (!authHeader) {
-    return res.status(400).send({ msj: "must register" })
+    return res.status(400).json({ msj: "unauthorized" })
   }
+
   const token = authHeader.split(" ")[1]
+  if (!token) {
+    return res.status(401).json({ msj: "Token invalid" })
+  }
   let payload = {}
 
   try {
@@ -18,10 +22,8 @@ const authToken = (req, res, next) => {
 
     next()
   } catch (error) {
-    console.error("Token verification error:", error)
-    res.statusMessage = "Token is invalid"
+    res.statusMessage = "Error token"
     return res.status(401).end()
   }
 }
-
 module.exports = authToken
