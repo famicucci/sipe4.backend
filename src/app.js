@@ -1,7 +1,7 @@
 const express = require("express")
 const dotenv = require("dotenv")
-const productRoutes = require("./routes/productRoutes")
-const userRoutes = require("./routes/userRoutes")
+const productRoutes = require("./routes/product.routes")
+const userRoutes = require("./routes/user.routes")
 
 dotenv.config()
 
