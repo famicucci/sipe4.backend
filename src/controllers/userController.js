@@ -1,12 +1,13 @@
-const db = require("../models")
-const { User } = db
 const { serialize } = require("cookie")
 const bcryptjs = require("bcryptjs")
-const generateJWT = require("../utils/token")
+const { generateJWT } = require("../utils/jwt")
+const db = require("../models")
+const { User } = db
 
 exports.loginUser = async (req, res) => {
   try {
     const user = await User.findOne({ where: { user: req.body.user } })
+
     if (user) {
       const verifyPassword = bcryptjs.compareSync(
         req.body.password,
@@ -22,13 +23,14 @@ exports.loginUser = async (req, res) => {
           sameSite: "strict",
           secure: false,
         })
-        res.send({ success: token, userType: usuario.rol ? "admin" : "user" })
+        res.send({ success: token, userType: user.rol ? "admin" : "user" })
       } else {
         res.statusMessage = "Error in username or password"
         return res.status(400).end()
       }
     }
   } catch (error) {
+    console.error(error)
     res.statusMessage = "error"
     return res.status(500).end()
   }

@@ -1,22 +1,24 @@
 const jwt = require("jsonwebtoken")
 
 const authToken = (req, res, next) => {
-  const auth = req.headers.authorization
-
-  if (!auth) {
-    res.statusMessage = "is not authorized"
-    return res.status(401).end()
+  if (!req.headers["user-token"]) {
+    return res.status(400).send({ msj: "must register" })
   }
+  const userToken = req.headers["user-token"]
+  let payload = {}
 
-  const token = auth.split(" ")[1]
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    // if(decoded.expiredIn<)
-    req.user = decoded
+    const payload = jwt.verify(userToken, process.env.JWT_SECRET)
+
+    req.userId = payload.userId
+    req.userRol = payload.userRol
+    req.userCompanyId = payload.userCompanyId
+
     next()
   } catch (error) {
-    res.statusMessage = "token invalid"
-    return res.status(500).end()
+    res.statusMessage = "Token is invalid"
+    return res.status(401).end()
   }
 }
+
 module.exports = authToken
