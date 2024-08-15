@@ -1,9 +1,8 @@
-const { serialize } = require("cookie")
 const bcryptjs = require("bcryptjs")
-const { generateJWT } = require("../utils/jwt")
-const db = require("../models")
+const { generateJWT, createCookie } = require("./utils")
+const db = require("../../models")
 const { User } = db
-const { ErrosValidations } = require("../Error/errorUser")
+const { ErrosValidations } = require("./userValidation")
 
 exports.loginUser = async (req, res) => {
   try {
@@ -20,13 +19,7 @@ exports.loginUser = async (req, res) => {
 
     if (verifyPassword) {
       const token = generateJWT(user)
-      const serialized = serialize("userToken", token, {
-        // httpOnly: true,
-        maxAge: 60 * 60 * 24 * 7,
-        path: "/",
-        sameSite: "strict",
-        secure: false,
-      })
+      const serialized = createCookie(token)
 
       res.setHeader("Set-Cookie", serialized)
       return res.send({ success: token, userType: user.rol ? "admin" : "user" })

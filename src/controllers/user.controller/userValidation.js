@@ -8,4 +8,5 @@ const errorFactory = function (name) {
   }
 }
 const ErrosValidations = errorFactory("ValidationError")
+
 module.exports = { ErrosValidations }

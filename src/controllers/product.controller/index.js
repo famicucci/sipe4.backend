@@ -1,4 +1,4 @@
-const db = require("../models")
+const db = require("../../models/index")
 const { Product } = db
 
 exports.getProducts = async (req, res) => {
