@@ -3,14 +3,14 @@ const bcryptjs = require("bcryptjs")
 const { generateJWT } = require("../utils/jwt")
 const db = require("../models")
 const { User } = db
+const { ErrosValidations } = require("../Error/errorUser")
 
 exports.loginUser = async (req, res) => {
   try {
     const user = await User.findOne({ where: { user: req.body.user } })
 
     if (!user) {
-      res.statusMessage = "Error in username or password"
-      return res.status(400).end()
+      throw new ErrosValidations("Error in username and/or password")
     }
 
     const verifyPassword = bcryptjs.compareSync(
@@ -31,12 +31,11 @@ exports.loginUser = async (req, res) => {
       res.setHeader("Set-Cookie", serialized)
       return res.send({ success: token, userType: user.rol ? "admin" : "user" })
     } else {
-      res.statusMessage = "Error in username or password"
-      return res.status(400).end()
+      throw new ErrosValidations("Error in username and/or password")
     }
-  } catch (error) {
-    console.error(error)
-    res.statusMessage = "Error"
-    return res.status(500).end()
+  } catch (err) {
+    if (err instanceof ErrosValidations) {
+      res.status(400).json({ error: err.message })
+    }
   }
 }
