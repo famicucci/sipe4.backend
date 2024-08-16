@@ -18,12 +18,13 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     }
   )
-  Precio.belongsTo(models.Product, {
-    foreignKey: { name: "ProductCode", allowNull: false },
-    targetKey: "code",
-    onDelete: "CASCADE",
-    onUpdate: "CASCADE",
-  })
-
+  Price.associate = (models) => {
+    Price.belongsTo(models.Product, {
+      foreignKey: { name: "ProductCode", allowNull: false },
+      targetKey: "code",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
+    })
+  }
   return Price
 }
