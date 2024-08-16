@@ -20,8 +20,7 @@ const authToken = (req, res, next) => {
 
     req.userId = payload.userId
     req.userRol = payload.userRol
-    req.userCompanyId = payload.userCompanyId
-
+    req.userCompanyId = payload.payload.CompanyId
     next()
   } catch (error) {
     res.statusMessage = "Error token"
