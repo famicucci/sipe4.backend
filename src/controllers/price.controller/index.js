@@ -1,5 +1,6 @@
 const db = require("../../models/index")
 const { Price } = db
+const { AppError } = require("../../errors/crateErrorFactory")
 
 exports.getPrices = async (req, res) => {
   try {
@@ -9,8 +10,8 @@ exports.getPrices = async (req, res) => {
 
     res.status(200).send(prices)
   } catch (error) {
-    console.error("Error in getPrices:", error)
-    res.statusMessage = "prices not found"
-    return res.status(400).end()
+    if (error instanceof AppError) {
+      res.status(401).send({ error: error.message })
+    }
   }
 }

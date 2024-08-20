@@ -7,6 +7,6 @@ const errorFactory = function (name) {
     }
   }
 }
-const Error = errorFactory("Error")
+const AppError = errorFactory("AppError")
 
-module.exports = { Error }
+module.exports = { AppError }

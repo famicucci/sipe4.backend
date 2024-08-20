@@ -26,9 +26,9 @@ exports.loginUser = async (req, res) => {
     } else {
       throw new ErrosValidations("Error in username and/or password")
     }
-  } catch (err) {
-    if (err instanceof ErrosValidations) {
-      res.status(400).json({ error: err.message })
+  } catch (error) {
+    if (error instanceof ErrosValidations) {
+      res.status(400).send({ error: error.message })
     }
   }
 }
