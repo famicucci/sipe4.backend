@@ -1,4 +1,4 @@
-const errorValidation = function (name) {
+const errorFactory = function (name) {
   return class ErrorBusiness extends Error {
     constructor(message) {
       super(message)
@@ -7,6 +7,6 @@ const errorValidation = function (name) {
     }
   }
 }
-const ErrosValidations = errorValidation("ValidationError")
+const Error = errorFactory("Error")
 
-module.exports = { ErrosValidations }
+module.exports = { Error }
