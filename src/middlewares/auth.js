@@ -1,17 +1,16 @@
 const jwt = require("jsonwebtoken")
+const { Error } = require("../errors/crateErrorFactory")
 
 const authToken = (req, res, next) => {
   const authHeader = req.headers["authorization"]
 
   if (!authHeader) {
-    res.statusMessage = "unauthorized"
-    return res.status(400).end()
+    throw new Error("unauthorized")
   }
 
   const token = authHeader.split(" ")[1]
   if (!token) {
-    res.statusMessage = "Token invalid"
-    return res.status(401).end()
+    throw new Error("Token invalid")
   }
   let payload = {}
 
@@ -23,8 +22,9 @@ const authToken = (req, res, next) => {
     req.userCompanyId = payload.payload.CompanyId
     next()
   } catch (error) {
-    res.statusMessage = "Error token"
-    return res.status(401).end()
+    if (err instanceof Error) {
+      res.status(401).json({ error: err.message })
+    }
   }
 }
 module.exports = authToken
