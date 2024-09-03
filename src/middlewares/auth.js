@@ -24,7 +24,7 @@ const authToken = (req, res, next) => {
     next()
   } catch (error) {
     if (error instanceof AppError) {
-      res.status(401).send({ error: error.message })
+      return res.status(401).send({ error: error.message })
     } else {
       throw new AppError("The token is different")
     }
