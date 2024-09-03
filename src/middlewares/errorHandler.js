@@ -1,15 +1,17 @@
-const errorHandler = (err, req, res, next) => {
-  try {
-    const statusCode = err.statusCode || 500
+const { AppError } = require("../errors/crateErrorFactory")
 
-    res.status(statusCode).json({
-      error: err.name || "Error",
-      message: err.message || "Something went wrong",
-      statusCode: statusCode,
-    })
-  } catch (error) {
-    console.error(error)
+const errorHandler = (error, req, res, next) => {
+  if (!(error instanceof AppError)) {
+    error = new AppError("Algo salió mal", 500)
   }
+
+  res
+    .status(error.statusCode)
+    .send({
+      error: error.name,
+      message: error.message,
+      status: error.statusCode,
+    })
 }
 
 module.exports = errorHandler

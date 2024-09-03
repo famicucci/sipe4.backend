@@ -2,7 +2,7 @@ const db = require("../../models/index")
 const { Product } = db
 const { AppError } = require("../../errors/crateErrorFactory")
 
-exports.getProducts = async (req, res) => {
+exports.getProducts = async (req, res, next) => {
   try {
     const productList = await Product.findAll({
       attributes: ["code", "description"],
@@ -10,8 +10,6 @@ exports.getProducts = async (req, res) => {
 
     res.status(200).send(productList)
   } catch (error) {
-    if (error instanceof AppError) {
-      res.status(401).send({ error: error.message })
-    }
+    next(error)
   }
 }
