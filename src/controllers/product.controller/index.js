@@ -1,6 +1,5 @@
 const db = require("../../models/index")
 const { Product } = db
-const { AppError } = require("../../errors/crateErrorFactory")
 
 exports.getProducts = async (req, res, next) => {
   try {

@@ -1,14 +1,19 @@
-const errorFactory = function (name) {
-  return class ErrorBusiness extends Error {
-    constructor(message, statusCode) {
-      super(message)
-      this.name = name
-      this.message = message
-      this.statusCode = statusCode
-      // this.stack = ''
-    }
+class AppError extends Error {
+  constructor(message, statusCode) {
+    super(message)
+    this.name = "AppError"
+    this.statusCode = statusCode
+    this.message = message
   }
 }
 
-const AppError = errorFactory("AppError")
-module.exports = { AppError }
+class ValidationError extends AppError {
+  constructor(message, statusCode) {
+    super(message)
+    this.message = message
+    this.name = "ValidationError"
+    this.statusCode = statusCode
+  }
+}
+
+module.exports = { AppError, ValidationError }
