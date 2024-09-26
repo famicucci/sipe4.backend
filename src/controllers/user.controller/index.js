@@ -22,7 +22,7 @@ exports.loginUser = async (req, res, next) => {
       const serialized = createCookie(token)
 
       res.setHeader("Set-Cookie", serialized)
-      return res.json({ success: token, userType: user.rol ? "admin" : "user" })
+      return res.status(200).send({ message: "Logged successful", token })
     } else {
       throw new ValidationError("Error in username and/or password", 401)
     }
