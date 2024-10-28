@@ -1,10 +1,16 @@
 const db = require("../../models/index")
-const { Price } = db
+const { Price, Product } = db
 
 exports.getPrices = async (req, res, next) => {
   try {
     const prices = await Price.findAll({
-      attributes: ["id", "amount"],
+      attributes: ["productCode", "amount"],
+      include: [
+        {
+          model: Product,
+          attributes: ["description"],
+        },
+      ],
     })
 
     res.status(200).send(prices)

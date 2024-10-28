@@ -1,6 +1,7 @@
 const { AppError } = require("../errors/crateErrorFactory")
 
 const errorHandler = (error, req, res, next) => {
+  console.log(error)
   if (!(error instanceof AppError)) {
     error = new AppError("Algo salió mal", 500)
   }
