@@ -22,6 +22,7 @@ exports.getPrices = async (req, res, next) => {
           },
         ],
       },
+      raw: true,
     })
     res.status(200).send(prices)
   } catch (error) {
