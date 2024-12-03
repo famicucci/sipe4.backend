@@ -3,7 +3,9 @@ const { Price, Product } = db
 const { Op } = require("sequelize")
 
 exports.getPrices = async (req, res, next) => {
-  const searchQuery = req.query.search
+  const searchQuery = req.query.search || ""
+  const page = req.query.page
+  const pageSize = 20
 
   try {
     const prices = await Price.findAll({
@@ -22,6 +24,8 @@ exports.getPrices = async (req, res, next) => {
           },
         ],
       },
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
       raw: true,
     })
     res.status(200).send(prices)

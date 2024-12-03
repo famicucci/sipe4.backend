@@ -12,3 +12,4 @@ exports.getProducts = async (req, res, next) => {
     next(error)
   }
 }
+  
