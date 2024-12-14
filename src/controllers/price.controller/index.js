@@ -3,19 +3,13 @@ const { Price, Product } = db
 const { Op } = require("sequelize")
 
 exports.getPrices = async (req, res, next) => {
-  const searchQuery = req.query.search || ""
+  const searchQuery = req.query.search
   const page = req.query.page
   const pageSize = 20
 
   try {
     const prices = await Price.findAll({
       attributes: ["productCode", "amount"],
-      include: [
-        {
-          model: Product,
-          attributes: ["description"],
-        },
-      ],
       where: {
         [Op.or]: [
           { productCode: { [Op.like]: `%${searchQuery}%` } },
@@ -24,6 +18,12 @@ exports.getPrices = async (req, res, next) => {
           },
         ],
       },
+      include: [
+        {
+          model: Product,
+          attributes: ["description"],
+        },
+      ],
       limit: pageSize,
       offset: (page - 1) * pageSize,
       raw: true,
